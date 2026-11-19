@@ -60,7 +60,9 @@ export default function Admin() {
       } else {
         const table = sections.find(s => s.id === section)?.table;
         if (!table) return;
-        const result = await db.from(table).select("*").order("created_at", { ascending: false }).limit(100);
+        let query = db.from(table).select("*");
+        if (section !== "links" && section !== "fares") query = query.order("created_at", { ascending: false });
+        const result = await query.limit(100);
         if (result.error) throw result.error;
         setRows(result.data || []);
       }

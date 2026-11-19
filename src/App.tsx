@@ -1,4 +1,4 @@
-import { useMemo, useState, type FormEvent } from "react";
+import { useMemo, useState, type FormEvent, type ReactNode } from "react";
 import { ArrowLeft, ArrowRight, ArrowUpDown, Bookmark, Bus, Check, Clock3, Compass, Info, MapPin, Navigation, Plus, Search, ShieldCheck, SlidersHorizontal, X } from "lucide-react";
 import { categories, formatNaira, legs, resolveStop, stops, vehicleInfo } from "./data";
 import { findTrips, rankTrips } from "./routing";
@@ -21,8 +21,8 @@ export default function App() {
   const [searched, setSearched] = useState(false);
   const [selected, setSelected] = useState<Trip | null>(null);
   const [notice, setNotice] = useState("");
-  const [saved, setSaved] = useState<string[]>(() => readSaved("tayi-saved", []));
-  const [reports, setReports] = useState<FareReport[]>(() => readSaved("tayi-reports", []));
+  const [saved, setSaved] = useState<string[]>(() => readSaved<string[]>("tayi-saved", []));
+  const [reports, setReports] = useState<FareReport[]>(() => readSaved<FareReport[]>("tayi-reports", []));
   const [reportFor, setReportFor] = useState<string | null>(null);
   const [amount, setAmount] = useState("");
   const [vehicle, setVehicle] = useState<VehicleType>("Normal Bus");
@@ -208,7 +208,7 @@ export default function App() {
   </div>;
 }
 
-function Summary({ icon, value, label }: { icon: React.ReactNode; value: string; label: string }) {
+function Summary({ icon, value, label }: { icon: ReactNode; value: string; label: string }) {
   return <div>{icon}<strong>{value}</strong><small>{label}</small></div>;
 }
 function Instruction({ label, value }: { label: string; value: string }) {

@@ -25,7 +25,7 @@ export function findTrips(from:string,to:string):Trip[] {
   return found.map((route,index)=>{
     const min=route.reduce((n,l)=>n+l.minutes[0],0), max=route.reduce((n,l)=>n+l.minutes[1],0);
     const priced=route.filter(l=>l.fare);
-    return {id:route.map(l=>l.id+(l.direction==="reverse"?"r":"f")).join("-")+index,from,to,legs:route,minutes:[min,max],pricedFare:[priced.reduce((n,l)=>n+(l.fare?.[0]??0),0),priced.reduce((n,l)=>n+(l.fare?.[1]??0),0)],unpricedCount:route.filter(l=>!l.fare).length,changes:Math.max(0,route.length-1)};
+    return {id:route.map(l=>l.id+(l.direction==="reverse"?"r":"f")).join("-")+index,from,to,legs:route,minutes:[min,max] as [number,number],pricedFare:[priced.reduce((n,l)=>n+(l.fare?.[0]??0),0),priced.reduce((n,l)=>n+(l.fare?.[1]??0),0)] as [number,number],unpricedCount:route.filter(l=>!l.fare).length,changes:Math.max(0,route.length-1)};
   });
 }
 export function rankTrips(trips:Trip[],style:string):Trip[]{
